@@ -1080,23 +1080,23 @@ export default class ReactJkMusicPlayer extends PureComponent {
     //     }
     //     break;
 
-      //单曲循环
-      // case this.PLAYMODE["singleLoop"]["key"]:
-        IconNode = <LoopIcon />;
-        this.audio.currentTime = 0;
-        this.audioListsPlay(playId, true);
-        // break;
+    //单曲循环
+    // case this.PLAYMODE["singleLoop"]["key"]:
+    IconNode = <LoopIcon />;
+    this.audio.currentTime = 0;
+    this.audioListsPlay(playId, true);
+    // break;
 
-      //随机播放
-      // case this.PLAYMODE["shufflePlay"]["key"]:
-      //   {
-      //     IconNode = <ShufflePlayIcon />;
-      //     let randomPlayId = createRandomNum(0, audioListsLen - 1);
-      //     this.audioListsPlay(randomPlayId, true);
-      //   }
-      //   break;
-      // default:
-      //   IconNode = <OrderPlayIcon />;
+    //随机播放
+    // case this.PLAYMODE["shufflePlay"]["key"]:
+    //   {
+    //     IconNode = <ShufflePlayIcon />;
+    //     let randomPlayId = createRandomNum(0, audioListsLen - 1);
+    //     this.audioListsPlay(randomPlayId, true);
+    //   }
+    //   break;
+    // default:
+    //   IconNode = <OrderPlayIcon />;
     // }
   };
   /*eslint-disable no-unused-vars */
