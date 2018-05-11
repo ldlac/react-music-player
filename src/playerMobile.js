@@ -1,5 +1,10 @@
 import React from "react";
 import classNames from "classnames";
+import Slider from "rc-slider/lib/Slider";
+
+import MdVolumeDown from "react-icons/lib/md/volume-down";
+
+import MdVolumeMute from "react-icons/lib/md/volume-mute";
 
 const prefix = "react-jinke-music-player-mobile";
 
@@ -11,6 +16,12 @@ export const PlayModeTip = ({ visible, title, text }) => (
 );
 
 const PlayerMobile = ({
+  sliderBaseOptions,
+  soundValue,
+  audioSoundChange,
+  onSound,
+  onMute,
+  isMute,
   name,
   cover,
   singer,
@@ -82,6 +93,25 @@ const PlayerMobile = ({
       </span>
     </div>
     <div className={`${prefix}-toggle text-center group`}>
+      <span className="group play-sounds" key="play-sound" title="sounds">
+        {isMute ? (
+          <span className="sounds-icon" onTouchStart={onSound}>
+            <MdVolumeMute />
+          </span>
+        ) : (
+          <span className="sounds-icon" onTouchStart={onMute}>
+            <MdVolumeDown />
+          </span>
+        )}
+        <Slider
+          max={1}
+          value={soundValue}
+          onChange={audioSoundChange}
+          className="sound-operation"
+          {...sliderBaseOptions}
+        />
+      </span>
+
       {loading
         ? loadingIcon
         : [

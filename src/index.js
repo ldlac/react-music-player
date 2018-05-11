@@ -428,6 +428,12 @@ export default class ReactJkMusicPlayer extends PureComponent {
       >
         {toggle && isMobile ? (
           <AudioPlayerMobile
+            sliderBaseOptions={sliderBaseOptions}
+            soundValue={soundValue}
+            audioSoundChange={this.audioSoundChange}
+            onSound={this.onSound}
+            onMute={this.onMute}
+            isMute={isMute}
             playing={playing}
             loading={loading}
             pause={pause}
@@ -989,6 +995,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
   };
   pauseAudio = () => {
     this.props.audioPause && this.props.audioPause(this.getBaseAudioInfo());
+    this.audioReload();
   };
   loadStart = () => {
     this.setState({ loading: true });
@@ -1032,7 +1039,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
   //获取音频长度
   getAudioLength = () => {
     this.setState({
-      duration: this.audio.duration
+      duration: this.audio.duration - 10
     });
   };
   loadAudioError = e => {
@@ -1051,44 +1058,46 @@ export default class ReactJkMusicPlayer extends PureComponent {
     let IconNode = "";
     let { playId } = this.state;
     const audioListsLen = this.props.audioLists.length;
-    switch (playMode) {
-      //顺序播放
-      case this.PLAYMODE["order"]["key"]:
-        IconNode = <OrderPlayIcon />;
-        if (playId === audioListsLen - 1) return this._pauseAudio();
-        this.audioListsPlay(isNext ? ++playId : --playId);
-        break;
-
-      //列表循环
-      case this.PLAYMODE["orderLoop"]["key"]:
-        IconNode = <RepeatIcon />;
-        if (isNext) {
-          if (playId === audioListsLen - 1) playId = this.initPlayId;
-          this.audioListsPlay(++playId);
-        } else {
-          if (playId - 1 === this.initPlayId) playId = audioListsLen;
-          this.audioListsPlay(--playId);
-        }
-        break;
+    // playMode = this.PLAYMODE["singleLoop"]["key"];
+    //
+    // switch (playMode) {
+    //   //顺序播放
+    //   case this.PLAYMODE["order"]["key"]:
+    //     IconNode = <OrderPlayIcon />;
+    //     if (playId === audioListsLen - 1) return this._pauseAudio();
+    //     this.audioListsPlay(isNext ? ++playId : --playId);
+    //     break;
+    //
+    //   //列表循环
+    //   case this.PLAYMODE["orderLoop"]["key"]:
+    //     IconNode = <RepeatIcon />;
+    //     if (isNext) {
+    //       if (playId === audioListsLen - 1) playId = this.initPlayId;
+    //       this.audioListsPlay(++playId);
+    //     } else {
+    //       if (playId - 1 === this.initPlayId) playId = audioListsLen;
+    //       this.audioListsPlay(--playId);
+    //     }
+    //     break;
 
       //单曲循环
-      case this.PLAYMODE["singleLoop"]["key"]:
+      // case this.PLAYMODE["singleLoop"]["key"]:
         IconNode = <LoopIcon />;
         this.audio.currentTime = 0;
         this.audioListsPlay(playId, true);
-        break;
+        // break;
 
       //随机播放
-      case this.PLAYMODE["shufflePlay"]["key"]:
-        {
-          IconNode = <ShufflePlayIcon />;
-          let randomPlayId = createRandomNum(0, audioListsLen - 1);
-          this.audioListsPlay(randomPlayId, true);
-        }
-        break;
-      default:
-        IconNode = <OrderPlayIcon />;
-    }
+      // case this.PLAYMODE["shufflePlay"]["key"]:
+      //   {
+      //     IconNode = <ShufflePlayIcon />;
+      //     let randomPlayId = createRandomNum(0, audioListsLen - 1);
+      //     this.audioListsPlay(randomPlayId, true);
+      //   }
+      //   break;
+      // default:
+      //   IconNode = <OrderPlayIcon />;
+    // }
   };
   /*eslint-disable no-unused-vars */
   //音频播放结束
